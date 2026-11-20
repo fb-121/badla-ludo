@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#170d16"><link rel="icon" href="data:,"><style>[hidden]{display:none!important}html,body{margin:0;padding:0}</style><title>Badla Ludo</title></head><body>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#170d16"><meta name="description" content="Truck-art Ludo for siblings who live apart. Get on a call, pick a ride, and take your badla."><meta property="og:title" content="Badla Ludo"><meta property="og:description" content="Truck-art Ludo for siblings who live apart. Get on a call, pick a ride, and take your badla."><meta property="og:type" content="website"><link rel="icon" href="data:,"><style>[hidden]{display:none!important}html,body{margin:0;padding:0}</style><title>Badla Ludo</title></head><body>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Hind:wght@400;500;600;700&display=swap">
@@ -25,7 +25,7 @@ body{height:100%;margin:0;background:var(--ink);color:var(--cream);font:16px/1.4
 .bokeh i{position:absolute;border-radius:50%;filter:blur(18px);opacity:.35}
 #gl{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
 h1,h2,h3,p{margin:0}
-button{font-family:inherit}
+button{font-family:inherit;touch-action:manipulation}
 
 .top{position:absolute;left:0;right:0;top:0;display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:10px;padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px));pointer-events:none}
 .brand{font:400 .95rem/1 var(--font-display);color:var(--gold);letter-spacing:.02em;text-shadow:2px 2px 0 #7a1d16}
@@ -53,8 +53,8 @@ button{font-family:inherit}
 @keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 .die{width:36px;height:36px;border-radius:9px;background:#fff6e4;border:2px solid #c8281c;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);padding:4px}
 .die span{width:7px;height:7px;border-radius:50%;background:#14756a;place-self:center}
-.reacts{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
-.react{height:40px;min-width:40px;padding:0 10px;border-radius:999px;border:1px solid var(--line);background:rgba(23,13,22,.6);color:var(--cream);font:700 .86rem/1 var(--font-body);cursor:pointer}
+.reacts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;width:min(100%,21rem)}
+.react{height:40px;min-width:0;padding:0 8px;white-space:nowrap;border-radius:999px;border:1px solid var(--line);background:rgba(23,13,22,.6);color:var(--cream);font:700 .86rem/1 var(--font-body);cursor:pointer}
 .react:disabled{opacity:.35}
 .btn{font:700 1rem/1 var(--font-body);min-height:50px;padding:0 22px;border-radius:999px;border:0;background:linear-gradient(180deg,#ffcb5c,#e9a128);color:#2b1608;cursor:pointer;box-shadow:0 5px 0 #a8661b}
 .btn:disabled{opacity:.4;cursor:default}
@@ -93,6 +93,38 @@ label.nm{display:grid;gap:6px;font:600 .9rem/1.2 var(--font-body);color:var(--cr
 label.nm.need input{border-color:var(--gold);box-shadow:0 0 0 3px rgba(242,180,64,.25)}
 input[type=text]{width:100%;font:500 1rem/1.3 var(--font-body);color:var(--cream);background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:12px;padding:11px 12px;-webkit-user-select:text;user-select:text}
 .note{color:var(--dim);font-size:.88rem;max-width:60ch}
+/* lobby: the board spins on its own stage up top, and everything to read or tap sits on one solid card */
+.app.inlobby .top{display:none}
+.overlay.lobby{display:block;background:none;padding:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.stage{height:var(--stage)}
+.app{--stage:clamp(140px,24vh,330px)}
+.card{position:relative;margin:0 auto;max-width:30rem;min-height:calc(100% - var(--stage));gap:16px;background:linear-gradient(180deg,rgba(46,26,44,.97) 0%,#1d1019 70%);border:1px solid var(--line);border-bottom:0;border-radius:26px 26px 0 0;padding:22px 18px 10px;box-shadow:0 -20px 44px rgba(0,0,0,.5)}
+.card::before{content:"";position:absolute;top:8px;left:50%;width:38px;height:4px;margin-left:-19px;border-radius:4px;background:var(--line)}
+.card .hd{display:grid;gap:6px}
+.card .title{font-size:clamp(2.2rem,11vw,2.9rem);line-height:1;text-shadow:2px 2px 0 var(--red),4px 4px 0 #14756a}
+.card .lede{font-size:.95rem;line-height:1.45;color:var(--dim);opacity:1}
+.lbl{display:flex;align-items:center;gap:8px;font:600 .92rem/1.2 var(--font-body);color:var(--cream)}
+.lbl i{font-style:normal;display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--gold);color:var(--ink);font:700 .72rem/1 var(--font-body)}
+.grp{display:grid;gap:10px}
+.card label.nm{gap:10px}
+.optrow{display:grid;grid-template-columns:auto auto;justify-content:space-between;align-items:center;gap:10px}
+.optrow .seg{justify-self:end}
+.seg button{white-space:nowrap}
+.go{display:grid;gap:8px;justify-items:stretch}
+.opts2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:10px}
+.opt{display:grid;gap:6px;min-width:0}
+.opt>span{font-size:.82rem;color:var(--dim)}
+.opt .seg button{flex:1;padding:9px 6px}
+#recBtn{margin-bottom:calc(env(safe-area-inset-bottom,0px))}
+.go .note{text-align:center;justify-self:center;font-size:.85rem;line-height:1.3}
+#startBtn{width:100%;min-height:56px;font-size:1.08rem}
+.linkbtn{justify-self:center;background:none;border:0;color:var(--dim);font:600 .9rem/1 var(--font-body);text-decoration:underline;text-underline-offset:4px;padding:10px;cursor:pointer}
+.linkbtn:focus-visible{outline:3px solid var(--cream);outline-offset:2px;border-radius:8px}
+.seat.taken{background:#2f1c2c}
+.seat.armed{border-color:var(--gold);background:#4a2b45}
+.seat.armed span span{color:var(--gold)}
+
+@media (min-width:640px){.card{border-radius:26px;border-bottom:1px solid var(--line);min-height:0;margin-bottom:28px}.card::before{display:none}}
 .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
 .lobbyrow{display:flex;gap:10px}
 .lobbyrow .btn:first-child{flex:1}
@@ -170,21 +202,26 @@ input[type=text]{width:100%;font:500 1rem/1.3 var(--font-body);color:var(--cream
     <button id="mClose">Close</button>
   </div>
 
-  <div class="overlay" id="lobby">
-    <div class="sheet">
-      <p class="eyebrow">Truck-art edition</p>
-      <h1 class="title">The Long<br>Drive</h1>
-      <p class="lede">Ludo the way it was played at home, except everyone drives. Pick a ride, get on a call, and knock each other home.</p>
-      <label class="nm" id="nmLabel" for="nameIn">First, your name
-        <input type="text" id="nameIn" maxlength="18" autocomplete="off" placeholder="What your siblings call you">
+  <div class="overlay lobby" id="lobby">
+    <div class="stage" id="lobbyStage" aria-hidden="true"></div>
+    <div class="sheet card">
+      <header class="hd">
+        <h1 class="title">Badla Ludo</h1>
+        <p class="lede">Ludo like back home, except everyone drives.</p>
+      </header>
+      <label class="nm" id="nmLabel" for="nameIn"><span class="lbl"><i>1</i>Your name</span>
+        <input type="text" id="nameIn" maxlength="18" autocomplete="off" autocapitalize="words" placeholder="What your siblings call you">
       </label>
-      <div class="seats" id="seats"></div>
-      <div class="opts">
-        <div class="optrow"><span>Pieces each</span><div class="seg" id="segMode"><button data-m="2" class="on">Quick · 2</button><button data-m="4">Classic · 4</button></div></div>
-        <div class="optrow"><span>Empty seats</span><div class="seg" id="segBots"><button data-b="1" class="on">Computer plays</button><button data-b="0">Leave empty</button></div></div>
+      <div class="grp"><span class="lbl"><i>2</i>Pick your ride</span><div class="seats" id="seats"></div></div>
+      <div class="opts2">
+        <div class="opt"><span>Pieces each</span><div class="seg" id="segMode" role="group" aria-label="Pieces each"><button data-m="2" class="on">2 quick</button><button data-m="4">4 classic</button></div></div>
+        <div class="opt"><span>Empty seats</span><div class="seg" id="segBots" role="group" aria-label="Empty seats"><button data-b="1" class="on">Computer</button><button data-b="0">Nobody</button></div></div>
       </div>
-      <div class="lobbyrow"><button class="btn" id="startBtn" disabled>Start the game</button><button class="btn ghost" id="recBtn">Family record</button></div>
-      <p class="note" id="lobbyNote"></p>
+      <div class="go">
+        <p class="note" id="lobbyNote" role="status"></p>
+        <button class="btn" id="startBtn" disabled>Start the game</button>
+      </div>
+      <button class="linkbtn" id="recBtn">Family record and dice ledger</button>
     </div>
   </div>
 
@@ -294,6 +331,8 @@ function legal(st,color,d){
   for(let i=0;i<toks.length;i++){const p=toks[i];if(p===-1){if(d===6)out.push(i);}else if(p<56&&p+d<=56)out.push(i);}
   return out;
 }
+/* a sibling who stepped away is driven by the computer until their phone comes back */
+const auto=p=>!!(p&&(p.bot||p.away));
 function nextColor(st,color){
   const o=st.order;const i=o.indexOf(color);
   for(let k=1;k<=o.length;k++){const c=o[(i+k)%o.length];if(!st.finished||st.finished.indexOf(c)<0)return c;}
@@ -319,7 +358,7 @@ function applyMove(st,color,i,d){
   const home=to===56;
   s.last={kind:'move',color:color,token:i,from:from,to:to,caps:caps,home:home,revenge:revenge,freed:freed};
   // chit-chat: a human landing on a star sometimes draws a prompt for the call
-  if(to<=50&&STARS.has(absOf(color,to))&&!s.players[color].bot&&rand01()<.6){
+  if(to<=50&&STARS.has(absOf(color,to))&&!auto(s.players[color])&&rand01()<.6){
     s.chat={n:(s.chat?s.chat.n:0)+1,idx:Math.floor(rand01()*PROMPTS.length),color:color};
   }
   if(s.tokens[color].every(p=>p===56)){
@@ -711,7 +750,7 @@ let db=null,room=null,user=null,uid=null,canWrite=null,online='connecting';
 let G={status:'lobby'};
 let SEATS={},BOTN={},TITLES_BY={},STATS={};
 let shown=null,lastRollSeq=null,lastSeq=null,lastChat=null,boardRot=0,boardRotTarget=0,mode=2,useBots=true,myName='';
-let statsDone={},changedAt=Date.now();
+let statsDone={},changedAt=Date.now(),reclaimed='';
 const nameIn=$('nameIn');
 try{const n=localStorage.getItem('ld_name');if(n){nameIn.value=n;myName=n;}}catch(e){}
 
@@ -737,11 +776,11 @@ async function commit(next){
 }
 function controls(col){
   const p=G.players&&G.players[col];if(!p)return false;
-  if(p.bot){
+  if(auto(p)){
     if(online!=='live')return true;
     if(G.host===uid)return true;
-    const humans=G.order.map(c=>G.players[c]).filter(x=>!x.bot).map(x=>x.uid).sort();
-    return Date.now()-(G.at||0)>8000&&humans[0]===uid;
+    /* host went quiet: any seated sibling keeps the computer players moving. The server rejects duplicate moves. */
+    return !!myColor()&&Date.now()-changedAt>8000;
   }
   return p.uid===uid;
 }
@@ -754,7 +793,7 @@ function doMove(i){if(G.status!=='playing'||G.phase!=='move'||!controls(G.turn))
 function engine(){
   if(G.status!=='playing'||animating)return;
   const col=G.turn;if(!controls(col))return;
-  const bot=G.players[col].bot;
+  const bot=auto(G.players[col]);
   if(G.phase==='roll'){if(bot)schedule(700,doRoll);return;}
   const moves=legal(G,col,G.dice);
   if(!moves.length){schedule(1100,()=>commit(applyPass(G,col)));return;}
@@ -798,8 +837,10 @@ function onGame(){
         },steps*165);
       }
       if(lm.kind==='sixes')toast(nameOfColor(lm.color)+' rolled three sixes. Turn lost.');
+      if(lm.kind==='away')toast(nameOfColor(lm.color)==='You'?'You were away, so the computer drove for you.':displayName(lm.color)+' stepped away. The computer is driving for them until they are back.');
+      if(lm.kind==='back'&&nameOfColor(lm.color)!=='You')toast(displayName(lm.color)+' is back.');
       if(lm.kind==='pass'&&lm.skipped)toast(nameOfColor(lm.color)==='You'?'Your turn was skipped while you were away.':displayName(lm.color)+'\'s turn was skipped.');
-      else if(lm.kind==='pass'&&controls(lm.color)&&!G.players[lm.color].bot)toast('No move with a '+lm.value+'. Turn passes.');
+      else if(lm.kind==='pass'&&controls(lm.color)&&!auto(G.players[lm.color]))toast('No move with a '+lm.value+'. Turn passes.');
       if(lm.kind==='move'&&lm.from===-1)setTimeout(()=>sfx.horn(),200);
       recordStats(st,lm);
     }
@@ -813,6 +854,12 @@ function onGame(){
     shown={};ORDER.forEach(c=>{if(st.tokens[c])shown[c]=st.tokens[c].slice();});
     if(st.seq!==lastSeq&&st.status==='playing'&&st.phase==='roll'&&st.turn===mc&&lastSeq!==null)sfx.turn();
     if(st.status==='done')recordGameEnd(st);
+    if(st.status==='playing'&&mc&&st.players[mc].away&&reclaimed!==st.gid+':'+st.seq&&online==='live'&&!document.hidden){
+      reclaimed=st.gid+':'+st.seq;
+      const s2=JSON.parse(JSON.stringify(st));delete s2.players[mc].away;s2.last={kind:'back',color:mc};
+      setTimeout(()=>{if(G.seq===st.seq)commit(s2);},600);
+      toast('Welcome back. You are driving again.');
+    }
     if(st.seq!==lastSeq)changedAt=Date.now();
     lastSeq=st.seq;
   }else{
@@ -852,7 +899,7 @@ function dieHTML(n){const pos={1:[5],2:[1,9],3:[1,5,9],4:[1,3,7,9],5:[1,3,5,7,9]
 function titleOf(id){const t=TITLES_BY[id];return t&&t.title?t.title:'';}
 function refreshUI(){
   const st=G,mc=myColor(),inGame=st.status==='playing'||st.status==='done';
-  $('lobby').style.display=inGame?'none':'flex';
+  $('lobby').style.display=inGame?'none':'block';app.classList.toggle('inlobby',!inGame);
   $('dock').hidden=!inGame;
   $('win').hidden=st.status!=='done';
   if(st.status==='done')drawWin();
@@ -862,7 +909,7 @@ function refreshUI(){
   st.order.forEach(c=>{
     const p=st.players[c],home=st.tokens[c].filter(x=>x===56).length,n=st.tokens[c].length;
     const nm=displayName(c),you=!p.bot&&p.uid===uid;
-    const sub=gr[c]?'<small class="badla">Badla due: '+esc(nameOfColor(gr[c]))+'</small>':'<small>'+(p.bot?'Computer · ':'')+(titleOf(p.uid)&&!p.bot?esc(titleOf(p.uid))+' · ':'')+home+'/'+n+' home</small>';
+    const sub=p.away?'<small>Away · computer driving</small>':gr[c]?'<small class="badla">Badla due: '+esc(nameOfColor(gr[c]))+'</small>':'<small>'+(p.bot?'Computer · ':'')+(titleOf(p.uid)&&!p.bot?esc(titleOf(p.uid))+' · ':'')+home+'/'+n+' home</small>';
     h+='<button class="tag'+(st.turn===c&&st.status==='playing'?' turn':'')+'" data-c="'+c+'" style="--c:'+COL[c].hex+'" aria-label="'+esc(nm)+(you||p.bot?', tap to rename':'')+'"><span class="av" style="background:'+COL[c].hex+'">'+esc((nm||'?').trim().charAt(0).toUpperCase())+'</span><span class="tx"><b>'+esc(nm)+(you?' (you)':'')+'</b>'+sub+'</span></button>';
   });
   if(tagsEl.dataset.h!==h){tagsEl.dataset.h=h;tagsEl.innerHTML=h;placeTags();}
@@ -890,7 +937,9 @@ const projV=new THREE.Vector3();
 let boardRect={l:0,r:0,t:0,b:0};
 function measureBoard(){
   let l=1e9,r=-1e9,t=1e9,b=-1e9;
-  [[-8.5,-8.5],[8.5,-8.5],[8.5,8.5],[-8.5,8.5]].forEach(p=>{projV.set(p[0],TOP,p[1]).project(camera);const x=(projV.x+1)/2*viewW,y=(1-projV.y)/2*viewH;l=Math.min(l,x);r=Math.max(r,x);t=Math.min(t,y);b=Math.max(b,y);});
+  const spin=!(G.status==='playing'||G.status==='done');
+  const pts=spin?Array.from({length:16},(_,k)=>[Math.cos(k*Math.PI/8)*12,Math.sin(k*Math.PI/8)*12]):[[-8.5,-8.5],[8.5,-8.5],[8.5,8.5],[-8.5,8.5]];
+  pts.forEach(p=>{projV.set(p[0],TOP,p[1]).project(camera);const x=(projV.x+1)/2*viewW,y=(1-projV.y)/2*viewH;l=Math.min(l,x);r=Math.max(r,x);t=Math.min(t,y);b=Math.max(b,y);});
   boardRect={l:l,r:r,t:t,b:b};
 }
 function placeTags(){
@@ -970,8 +1019,8 @@ function drawWin(){
   if(!losers.length){h+='<p class="lede">'+(iWon?'Beat the computer. Now beat your siblings.':'The computer wins this one.')+'</p>';}
   else if(crowned){
     h+='<p class="lede">'+(losers.indexOf(uid)>=0?'Your title until the next game:':'Everyone else is now:')+'</p><p class="crowned">'+esc(crowned)+'</p>';
-  }else if(iWon||(wp.bot&&controls(w))){
-    if(wp.bot){setTimeout(()=>crown(TITLES[Math.floor(rand01()*TITLES.length)]),1200);h+='<p class="lede">'+esc(displayName(w))+' is choosing your title...</p>';}
+  }else if(iWon||(auto(wp)&&controls(w))){
+    if(auto(wp)){setTimeout(()=>crown(TITLES[Math.floor(rand01()*TITLES.length)]),1200);h+='<p class="lede">'+esc(displayName(w))+' is choosing your title...</p>';}
     else{
       h+='<p class="lede">Victory lap. Pick the title everyone else wears until the next game.</p><div class="chips" id="titleChips">'+TITLES.map(t=>'<button class="chipt'+(t===pickTitle?' on':'')+'" data-t="'+esc(t)+'">'+esc(t)+'</button>').join('')+'</div><input type="text" id="customTitle" maxlength="40" placeholder="Or write your own title"><button class="btn" id="crownBtn">Crown them</button>';
     }
@@ -1041,31 +1090,41 @@ $('mEnd').addEventListener('click',()=>{const b=$('mEnd');if(b.dataset.arm!=='1'
 
 /* ================= lobby ================= */
 function seatName(){return (nameIn.value||myName||'').trim().slice(0,18);}
+let freeArm=null,freeT=null;
 function drawLobby(){
   const mc=myColor(),act=(online==='live'&&uid&&canWrite!==false)||online==='solo';
   let h='';
   ORDER.forEach(c=>{
     const s=SEATS[c],mine=s&&s.uid===uid,taken=s&&!mine;
-    const who=mine?'You · tap to leave':(taken?esc(s.name||'Someone')+(titleOf(s.uid)?' · '+esc(titleOf(s.uid)):''):(useBots?'Computer: '+esc(BOTN[c]||BOT_DEFAULT[c]):'Tap to sit'));
-    h+='<button class="seat'+(mine?' mine':'')+'" data-c="'+c+'" style="--c:'+COL[c].hex+'"'+((taken||!act)?' disabled':'')+'><span class="sw"></span><span><b>'+COL[c].urdu+' · '+COL[c].ride+'</b><span>'+who+'</span></span></button>';
+    const armed=taken&&freeArm===c;
+    const who=mine?'You · tap to leave':(armed?'Tap again to free this seat':(taken?esc(s.name||'Someone')+(titleOf(s.uid)?' · '+esc(titleOf(s.uid)):''):(useBots?'Computer plays':'Tap to sit')));
+    h+='<button class="seat'+(mine?' mine':'')+(taken?' taken':'')+(armed?' armed':'')+'" data-c="'+c+'" style="--c:'+COL[c].hex+'"'+(!act?' disabled':'')+'><span class="sw"></span><span><b>'+COL[c].ride+'</b><span>'+who+'</span></span></button>';
   });
   const se=$('seats');if(se.dataset.h!==h){se.dataset.h=h;se.innerHTML=h;}
   const humans=ORDER.filter(c=>SEATS[c]).length,total=useBots?4:humans;
   $('startBtn').disabled=!(mc&&total>=2&&act);
   $('nmLabel').classList.toggle('need',!seatName());
   let note;
-  if(online==='solo')note='Solo practice against the computer. Could not reach the game server, so reload the page to play with your brother and sister.';
+  if(online==='solo')note='Could not reach the game server, so this is solo practice against the computer. Reload to try again. If it keeps happening, the server may be asleep: tell Faaiz.';
   else if(online==='connecting')note='Connecting...';
   else if(canWrite===false)note='Connecting...';
   else if(!seatName())note='Type your name, then pick a ride.';
   else if(!mc)note='Pick a ride. Anyone sitting down can start the game.';
-  else note=humans===1?(useBots?'Waiting for your siblings, or start now against the computer.':'Waiting for at least one more player.'):humans+' of you are seated. Start when everyone is on the call.';
+  else note=humans===1?(useBots?'Start now against the computer, or wait for your siblings to sit down.':'Waiting for a sibling to sit down. Or set Empty seats to Computer to start now.'):humans+' of you are seated. Start when everyone is on the call.';
   $('lobbyNote').textContent=note;
 }
 $('seats').addEventListener('click',async e=>{
   const b=e.target.closest('.seat');if(!b||b.disabled)return;ac();
   if(!seatName()){toast('Type your name first.');nameIn.focus();return;}
   const c=b.dataset.c,mine=SEATS[c]&&SEATS[c].uid===uid;
+  if(SEATS[c]&&!mine){
+    /* someone else's seat: a second tap frees it, for when a sibling closed the app and left a ghost seat behind */
+    if(freeArm!==c){freeArm=c;clearTimeout(freeT);freeT=setTimeout(()=>{freeArm=null;drawLobby();},3000);drawLobby();return;}
+    freeArm=null;clearTimeout(freeT);
+    if(online==='live'){try{await db.doc('seats/'+c).delete();}catch(err){toast('That did not save. Check your connection and try again.');}}
+    else{delete SEATS[c];drawLobby();}
+    return;
+  }
   myName=seatName();try{localStorage.setItem('ld_name',myName);}catch(err){}
   if(online!=='live'){
     if(mine)delete SEATS[c];else{ORDER.forEach(o=>{if(SEATS[o]&&SEATS[o].uid===uid)delete SEATS[o];});SEATS[c]={uid:uid,name:myName,at:Date.now()};}
@@ -1134,7 +1193,8 @@ function fit(){
   viewW=Math.max(1,app.clientWidth);viewH=Math.max(1,app.clientHeight);
   renderer.setSize(viewW,viewH,false);camera.aspect=viewW/viewH;camera.clearViewOffset();
   const inGame=G.status==='playing'||G.status==='done';
-  const topUI=inGame?100:60,botUI=inGame?196:(viewH*.55);
+  const stageH=inGame?0:(($('lobbyStage')&&$('lobbyStage').offsetHeight)||viewH*.34);
+  const topUI=inGame?100:14,botUI=inGame?196:Math.max(0,viewH-stageH+6);
   const freeH=Math.max(120,viewH-topUI-botUI),freeW=viewW-20;
   const dir=new THREE.Vector3(0,Math.sin(EL),Math.cos(EL));
   let lo=10,hi=200;
@@ -1204,7 +1264,7 @@ async function connectBackend(){
   const cache={};            /* path -> data */
   const docSubs=[],colSubs=[];
   const bcast={};            /* topic -> [fn] */
-  let ready=false,fails=0,errCb=null;
+  let ready=false,fails=0,errCb=null,writes=0;
   const clone=v=>JSON.parse(JSON.stringify(v));
   const snapDoc=p=>({exists:Object.prototype.hasOwnProperty.call(cache,p),data:()=>clone(cache[p]||{})});
   const snapCol=n=>({docs:Object.keys(cache).filter(k=>k.indexOf(n+'/')===0&&k.indexOf('/',n.length+1)<0).map(k=>({id:k.slice(n.length+1),data:()=>clone(cache[k])}))});
@@ -1212,14 +1272,19 @@ async function connectBackend(){
     docSubs.forEach(s=>{if(!paths||paths.indexOf(s.p)>=0)try{s.cb(snapDoc(s.p));}catch(e){console.error(e);}});
     colSubs.forEach(s=>{if(!paths||paths.some(p=>p.indexOf(s.n+'/')===0))try{s.cb(snapCol(s.n));}catch(e){console.error(e);}});
   }
+  const seqOf=v=>(v&&typeof v.seq==='number')?v.seq:null;
   function apply(path,data){ /* returns true if something changed */
     if(data===null){if(!(path in cache))return false;delete cache[path];return true;}
+    /* never let an older game state replace a newer one */
+    const a=seqOf(cache[path]),b=seqOf(data);if(a!==null&&b!==null&&b<a)return false;
     if(path in cache&&JSON.stringify(cache[path])===JSON.stringify(data))return false;
     cache[path]=data;return true;
   }
   async function pull(){
+    const w0=writes;
     const {data,error}=await sb.from(T).select('path,data').eq('room',ROOM);
     if(error)throw error;
+    if(writes!==w0)return []; /* a write landed while this read was in flight, so this read may be stale */
     const seen={},changed=[];
     data.forEach(r=>{seen[r.path]=1;if(apply(r.path,r.data))changed.push(r.path);});
     Object.keys(cache).forEach(p=>{if(!seen[p]){delete cache[p];changed.push(p);}});
@@ -1240,22 +1305,38 @@ async function connectBackend(){
   ch.on('broadcast',{event:'react'},m=>{(bcast.react||[]).forEach(f=>{try{f({data:m.payload,sameTab:false});}catch(e){}});});
   ch.subscribe();
   await poll();
+  if(!ready){await new Promise(r=>setTimeout(r,1500));await poll();}
+  if(!ready){try{sb.removeChannel(ch);}catch(e){}return null;}
   setInterval(()=>{if(!document.hidden)poll();},3500);
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)poll();});
   const db={
     doc(path){return{
       async set(data){
+        writes++;
+        if(path==='ludo/game'){
+          /* compare-and-set: the server only keeps it if it is newer than what is stored */
+          let {data:ok,error}=await sb.rpc('ld_put_game',{p_room:ROOM,p_path:path,p_data:clone(data)});
+          if(error&&(error.code==='PGRST202'||error.code==='42883')){
+            const r=await sb.from(T).upsert({room:ROOM,path:path,data:clone(data),updated_at:new Date().toISOString()});
+            error=r.error;ok=!r.error;
+          }
+          writes++;if(error)throw error;
+          if(ok){if(apply(path,clone(data)))notify([path]);}else poll();
+          return;
+        }
         const {error}=await sb.from(T).upsert({room:ROOM,path:path,data:clone(data),updated_at:new Date().toISOString()});
-        if(error)throw error;if(apply(path,clone(data)))notify([path]);
+        writes++;if(error)throw error;if(apply(path,clone(data)))notify([path]);
       },
       async update(part){
+        writes++;
         const next=Object.assign({},cache[path]||{},clone(part));
         const {error}=await sb.from(T).upsert({room:ROOM,path:path,data:next,updated_at:new Date().toISOString()});
-        if(error)throw error;if(apply(path,next))notify([path]);
+        writes++;if(error)throw error;if(apply(path,next))notify([path]);
       },
       async delete(){
+        writes++;
         const {error}=await sb.from(T).delete().eq('room',ROOM).eq('path',path);
-        if(error)throw error;if(apply(path,null))notify([path]);
+        writes++;if(error)throw error;if(apply(path,null))notify([path]);
       },
       onSnapshot(cb,err){if(err)errCb=err;docSubs.push({p:path,cb:cb});if(ready)cb(snapDoc(path));}
     };},
@@ -1288,11 +1369,15 @@ async function boot(){
 /* a sibling whose phone fell asleep can be skipped after 45 seconds of nothing happening */
 function checkSkip(){
   const b=$('skip'),p=G.players&&G.players[G.turn];
-  const show=G.status==='playing'&&!!myColor()&&!!p&&!p.bot&&p.uid!==uid&&Date.now()-changedAt>45000;
+  const show=G.status==='playing'&&!!myColor()&&!!p&&!auto(p)&&p.uid!==uid&&Date.now()-changedAt>45000;
   if(b.hidden===show)b.hidden=!show;
-  if(show)b.textContent='Skip '+displayName(G.turn)+'\'s turn';
+  if(show)b.textContent='Let the computer drive for '+displayName(G.turn);
 }
-$('skip').addEventListener('click',()=>{const s=applyPass(G,G.turn);s.last.skipped=true;$('skip').hidden=true;changedAt=Date.now();commit(s);});
+$('skip').addEventListener('click',()=>{
+  const c=G.turn,p=G.players&&G.players[c];if(!p||auto(p))return;
+  const s=JSON.parse(JSON.stringify(G));s.players[c].away=true;s.last={kind:'away',color:c};
+  $('skip').hidden=true;changedAt=Date.now();commit(s);
+});
 function goSolo(){online='solo';uid='me';refreshUI();}
 window.__ld={sel:()=>sel,pin:()=>$('pin').hidden?'':$('pin').textContent,tokenScreen:(c,i)=>{const v=new THREE.Vector3();tokens[c][i].getWorldPosition(v);v.y+=.3;v.project(camera);return [(v.x+1)/2*viewW,(1-v.y)/2*viewH];},G:()=>G,setG:s=>{G=s;onGame();},doRoll:doRoll,doMove:doMove,legal:legal,myColor:myColor,animating:()=>animating,rollDie:rollDie,crown:crown,STATS:()=>STATS};
 fit();refreshUI();
